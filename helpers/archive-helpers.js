@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 
+
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
  * Consider using the `paths` object below to store frequently used file paths. This way,
@@ -32,9 +33,15 @@ exports.isUrlInList = function(url, callback) {
 };
 
 exports.addUrlToList = function(url, callback) {
+  // add from POST from web service
 };
 
 exports.isUrlArchived = function(url, callback) {
+  var fixturePath = exports.paths.archivedSites + url ;
+  if (fs.existsSync(fixturePath)) {
+    var asset = fixturePath + '/' + url + '.htm';
+    callback(res, asset, callback);
+  }
 };
 
 exports.downloadUrls = function(urls) {

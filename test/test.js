@@ -29,10 +29,14 @@ describe('server', function() {
     describe('GET', function () {
       it('should return the content of a website from the archive', function (done) {
         var fixtureName = 'www.google.com';
+        
         var fixturePath = archive.paths.archivedSites + '/' + fixtureName;
-
+        console.log('fixturePath---------------------->   ' + fixturePath);
         // Create or clear the file.
+       
         var fd = fs.openSync(fixturePath, 'w');
+        console.log('TEST---------------------->   ' + fd);
+
         fs.writeSync(fd, 'google');
         fs.closeSync(fd);
 
