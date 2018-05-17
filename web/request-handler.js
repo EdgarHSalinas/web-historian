@@ -16,10 +16,12 @@ var actions = {
         res.write(data);
         res.end();
       });
+    // I KNOW THE PROBLEM NOW, I SHOULDN'T PUT EVERYTHING IN THE GET REQUEST
     } else {
-      var googlePath = path.join(__dirname, '../archives/sites/google/Google.htm');
+      var url = req.url;
+      var filePath = path.join(__dirname, '../archives/sites', url, url);
       
-      fs.readFile(googlePath, function(err, data) {
+      fs.readFile(filePath, function(err, data) {
         if (err) { throw err; }
 
         res.writeHead(200, httpHelpers.headers);
@@ -34,6 +36,8 @@ var actions = {
 
 
 exports.handleRequest = function (req, res) {
+  console.log(`The method is: ${req.method}`);
+  console.log(`The url is: ${req.url}`);
   var requestMethod = actions[req.method];
   if (requestMethod) {
     requestMethod(req, res);

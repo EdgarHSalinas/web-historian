@@ -39,7 +39,7 @@ exports.addUrlToList = function(url, callback) {
 };
 
 exports.isUrlArchived = function(url, callback) {
-  var fixturePath = exports.paths.archivedSites + url ;
+  var fixturePath = exports.paths.archivedSites + url;
   if (fs.existsSync(fixturePath)) {
     var asset = fixturePath + '/' + url + '.htm';
     callback(res, asset, callback);
