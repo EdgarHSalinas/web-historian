@@ -29,22 +29,61 @@ exports.initialize = function(pathsObj) {
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(callback) {
+  var urls = fs.readFileSync(exports.paths.list, 'utf8');
+  var urlsSplit = urls.split('\n');
+
+  callback(urlsSplit);
 };
 
 exports.isUrlInList = function(url, callback) {
+  var urls = fs.readFileSync(exports.paths.list, 'utf8');
+  var urlsSplit = urls.split('\n');
+
+  for (var i = 0; i < urlsSplit.length; i++) {
+    if (urlsSplit[i] === url) {
+      callback(true)
+      return true;
+    }
+  }
+    callback(false);
+    return false;
+
 };
 
 exports.addUrlToList = function(url, callback) {
   // add from POST from web service
+  var fixturePath = exports.paths.list;
+  fs.appendFileSync(fixturePath, url + '\n');
+    if (callback !== undefined) {
+      callback();
+    }
+   
 };
 
 exports.isUrlArchived = function(url, callback) {
-  var fixturePath = exports.paths.archivedSites + url;
+  var fixturePath = exports.paths.archivedSites + '/' + url;
   if (fs.existsSync(fixturePath)) {
-    var asset = fixturePath + '/' + url + '.htm';
-    callback(res, asset, callback);
+      if (callback !== undefined) {
+           callback(true);
+      }
+      return true;
+    // var asset = fixturePath + '/' + url + '.htm';
+    // callback(res, asset, callback);
+  } else {
+     if (callback !== undefined) {
+       callback(false);
+     }
+     return false;
   }
 };
 
 exports.downloadUrls = function(urls) {
+  
+  var filePath = exports.paths.archivedSites;
+  for (var i = 0; i < urls.length; i++) {
+    var url = urls[i].split('.')[1];
+    fs.writeFile(filePath + '/' + urls[i], url, function() {
+      console.log('downloadUrls ========');
+    });
+  }
 };

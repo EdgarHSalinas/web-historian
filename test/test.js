@@ -31,11 +31,11 @@ describe('server', function() {
         var fixtureName = 'www.google.com';
         
         var fixturePath = archive.paths.archivedSites + '/' + fixtureName;
-        console.log('fixturePath---------------------->   ' + fixturePath);
+        console.log('##############################' + fixturePath);
+        
         // Create or clear the file.
        
         var fd = fs.openSync(fixturePath, 'w');
-        console.log('TEST---------------------->   ' + fd);
 
         fs.writeSync(fd, 'google');
         fs.closeSync(fd);
@@ -59,7 +59,6 @@ describe('server', function() {
     describe('POST', function () {
       it('should append submitted sites to \'sites.txt\'', function(done) {
         var url = 'www.example.com';
-
         // Reset the test file and process request
         fs.closeSync(fs.openSync(archive.paths.list, 'w'));
 
@@ -71,6 +70,7 @@ describe('server', function() {
             if (!err) {
               var fileContents = fs.readFileSync(archive.paths.list, 'utf8');
               expect(fileContents).to.equal(url + '\n');
+              
             }
 
             done(err);
